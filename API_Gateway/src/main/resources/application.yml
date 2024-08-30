@@ -1,0 +1,21 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+      health:
+        show-details: always
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: example_route
+          uri: lb://authservice
+          predicates:
+            - Path=/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: exampleCircuitBreaker
+                fallbackUri: forward:/fallback
