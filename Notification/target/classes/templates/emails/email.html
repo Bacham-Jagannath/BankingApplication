@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Application Status Update</title>
+    <style>
+        /* Basic styles for the email */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #007bff;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .status {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .signature {
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Loan Application Status Update</h2>
+    <p>{{name}} Anna Namasthey Ney,</p>
+    <p>We are writing to inform you about the status of your recent loan application:</p>
+    <p class="status">Application Status: <strong>{{status}}</strong></p>
+    <p>Details:</p>
+    <ul>
+        <li><strong>Loan Amount:</strong> {{loanAmount}}</li>
+        <li><strong>Interest Rate:</strong> 7% </li>
+    </ul>
+    <p>If your application is approved, you will receive further instructions regarding the next steps. If you have any questions or require further assistance, please do not hesitate to contact us.</p>
+    <div class="signature">
+        <p>Best regards,</p>
+        <p>SCB</p>
+    </div>
+</div>
+</body>
+</html>

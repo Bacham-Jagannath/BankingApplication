@@ -1,0 +1,31 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: ycp
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages : com.cg.dto
+
+email:
+  host: smtp.gmail.com
+  port: 587
+  username: naraharinaik7@gmail.com
+  password: buuh qvgo mqpi gxop
+  debug: true
+  fromName: USER-SERVICE
+  logoUrl: https://cdn-icons-png.flaticon.com/512/14/14382.png
+
+#twilio:
+#  account:
+#    sid: ACc9646753ae43188108c732038fae855e
+#    auth_token: 0e3d901b6af5ad7c8ccecc97008dce00
+#    from: +12515778073
+
+default:
+  notification:
+    type: EMAIL
