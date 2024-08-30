@@ -1,0 +1,32 @@
+app:
+  auth:
+    resetPasswordLink: http://localhost:3000/reset-password
+    tokenSecret: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
+    tokenExpirationMsec: 864000000
+    cookieMaxAge: 864000000
+    cookiePath: /
+    secretKey: user secret key
+  user-service: http://localhost:8081/auth
+  cibil:
+    default:
+      cibil-score: 800
+
+
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+
+
