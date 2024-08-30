@@ -1,0 +1,70 @@
+
+spring:
+    application-name: AuthService
+    main:
+      allow-circular-references: true
+    security:
+      oauth2:
+        client:
+          registration:
+            google:
+              clientId: 471082306131-8i1cjcovqo6ukqnh33t5pjcjen4oe3eg.apps.googleusercontent.com
+              clientSecret: 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
+              scope:
+                - email
+                - profile
+
+app:
+  auth:
+    resetPasswordLink: http://localhost:3000/reset-password
+    tokenSecret: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
+    tokenExpirationMsec: 3000000
+    sub: JWT User Token
+    cookieMaxAge: 864000000
+    cookiePath: /
+    secretKey: user secret key
+    #  oauth2:
+    # After successfully authenticating with the OAuth2 Provider,
+    # we'll be generating an auth token for the user and sending the token to the
+    # redirectUri mentioned by the client in the /oauth2/authorize request.
+    # We're not using cookies because they won't work well in mobile clients.
+
+
+  #    authorizedRedirectUris:
+#      - http://localhost:3000/oauth2/redirect
+#      - myandroidapp://oauth2/redirect
+#      - myiosapp://oauth2/redirect
+
+
+#twilio:
+#  account:
+#    sid: ACd78e07066a3ae2422dfa53af9272d269
+#    auth_token: 3a1a8dd4116f84af045d587416b2a3f7
+#    from: +15037136243
+
+email:
+  host: smtp.gmail.com
+  port: 587
+  username: naraharinaik7@gmail.com
+  password: buuh qvgo mqpi gxop
+  debug: true
+  subject: One Time Password
+  fromName: USER-SERVICE
+  logoUrl: https://cdn-icons-png.flaticon.com/512/14/14382.png
+
+CONSTANTS:
+  JWT:
+    SECRET_KEY: DA693C13E7C5528473D915EB827EC
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+
+
+
