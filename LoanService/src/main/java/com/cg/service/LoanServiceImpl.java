@@ -20,10 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 import java.util.List;
@@ -46,8 +51,8 @@ public class LoanServiceImpl implements LoanService {
     @Autowired
     private HttpServletRequest request;
 
-    @Value("${app.user-service}")
-    private String userServiceUrl;
+    @Value("${app.customerServiceUrl}")
+    private String customerServiceUrl;
 
     @Value(("${app.cibil.default.cibil-score}"))
     private Integer defaultCibilScore;
@@ -123,6 +128,7 @@ public class LoanServiceImpl implements LoanService {
 
         CustomerDto customerDto = checkCustomerAndGetId(loanDto.getPanNumber());
         Claims tokenDetails = getTokenDetails(request);
+
         boolean loanStatus = false;
         if (tokenDetails.get("role").equals("ADMIN")) {
 
@@ -208,10 +214,36 @@ public class LoanServiceImpl implements LoanService {
     private CustomerDto checkCustomerAndGetId(String panNumber) {
 
         try {
+            String token = tokenAuthenticationFilter.getJwtFromRequest(request);
+
             RestTemplate restTemplate = new RestTemplate();
-            CustomerDto customerDto = restTemplate
-                    .getForObject(userServiceUrl + "/%s".formatted(panNumber), CustomerDto.class);
-            return customerDto;
+            String url = "%s/customer/{panNumber}".formatted(customerServiceUrl);
+            ResponseEntity<CustomerDto> response;
+
+            // Create headers and add Authorization
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer %s".formatted(token));
+
+            // Create an HttpEntity with the headers
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
+            try{
+            response = restTemplate.exchange(
+                    builder.buildAndExpand(panNumber).toUri(), // Expand path variable
+                    HttpMethod.GET,
+                    entity,
+                    CustomerDto.class
+            );
+            // Handle response if needed
+        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException e) {
+            // Rethrow the same exception type
+            throw new LoanServiceException(e.getMessage(), 400);
+        } catch (RestClientException e) {
+            // Rethrow a more general RestClientException if needed
+            throw new LoanServiceException(e.getMessage(), 400);
+        }
+
+            return response.getBody();
         } catch (HttpClientErrorException | UnknownContentTypeException | HttpServerErrorException e) {
             throw new LoanServiceException("Customer not found");
         }

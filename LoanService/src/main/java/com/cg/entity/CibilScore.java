@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -18,4 +20,13 @@ public class CibilScore {
     private String panNumber;
     @Column(name = "cibil_score")
     private Integer cibilScore;
+
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "updated_by")
+    private  String updatedBy;
+    @Column(name = "created_on", updatable = false)
+    private LocalDateTime createdOn;
+    @Column(name = "updated_on")
+    private LocalDateTime updatedOn;
 }

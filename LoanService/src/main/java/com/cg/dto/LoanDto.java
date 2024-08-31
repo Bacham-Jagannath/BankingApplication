@@ -22,8 +22,8 @@ public class LoanDto {
     private String loanType;
     private String status;
     private CustomerDto customerDto;
-    private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
+    private LocalDateTime createdOn;
+    private LocalDateTime updatedOn;
 
    private TransactionDto transaction;
 
@@ -33,8 +33,8 @@ public class LoanDto {
         this.loanId = loan.getLoanId();
         this.loanType = loan.getLoanType();
         this.loanAmount = loan.getLoanAmount();
-        this.createdDate = loan.getCreatedDate();
-        this.updatedDate = loan.getUpdatedDate();
+        this.createdOn = loan.getCreatedOn();
+        this.updatedOn = loan.getUpdatedOn();
         this.status = loan.getStatus();
         this.panNumber = loan.getPanNumber();
     }

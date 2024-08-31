@@ -26,10 +26,12 @@ public class Transaction {
     private String transactionStatus;
     @Column(name = "transaction_id")
     private String transactionId;
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
-    @Column(name = "updated_date")
-    private LocalDateTime updatedDate;
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "created_on", updatable = false)
+    private LocalDateTime createdOn;
+    @Column(name = "updated_on")
+    private LocalDateTime updatedOn;
     @Column(name = "updated_by")
     private Long updatedBy;
 

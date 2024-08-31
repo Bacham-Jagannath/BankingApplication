@@ -30,24 +30,19 @@ public class Loan {
     @Column(name = "status")
     private String status;
 
-    //@NotNull
-   // @PastOrPresent(message = "Created date must be in the past or present")
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
-
-    //@NotNull
-   // @PastOrPresent(message = "Updated date must be in the past or present")
-    @Column(name = "updated_date")
-    private LocalDateTime updatedDate;
-
     @Column(name = "pan_number")
     private String panNumber;
-    @Column(name = "created_by")
-    private String createdBy;
-    @Column(name = "updated_by")
-    private  String updatedBy;
 
     @OneToOne(mappedBy = "loan")
     @JsonManagedReference
     private Transaction transaction;
+
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "updated_by")
+    private  String updatedBy;
+    @Column(name = "created_on", updatable = false)
+    private LocalDateTime createdOn;
+    @Column(name = "updated_on")
+    private LocalDateTime updatedOn;
 }
