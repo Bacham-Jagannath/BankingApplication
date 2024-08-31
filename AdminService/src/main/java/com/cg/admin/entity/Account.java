@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 @Table(name = "account", schema = "auth_db")
@@ -33,6 +35,15 @@ public class Account {
     @JoinColumn(name = "pan_number", referencedColumnName = "pan_number")
     @JsonBackReference
     private Customer customer;
+
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "updated_by")
+    private  String updatedBy;
+    @Column(name = "created_on", updatable = false)
+    private LocalDateTime createdOn;
+    @Column(name = "updated_on")
+    private LocalDateTime updatedOn;
 
 
 }

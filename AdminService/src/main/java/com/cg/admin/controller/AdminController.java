@@ -1,10 +1,13 @@
 package com.cg.admin.controller;
 
-import com.cg.admin.dto.CustomerDto;
+import com.cg.admin.dto.PasswordChangeRequestDto;
+import com.cg.admin.dto.StatusUpdateDto;
 import com.cg.admin.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -12,16 +15,22 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @PutMapping("/updateCustomerAccountReq/{panNumber}")
-    public ResponseEntity<?> updateCustomerByPanNumber(@PathVariable("panNumber") String panNumber){
-        return adminService.updateCustomerByPanNumber(panNumber);
-
+    @GetMapping("/findAllCustomer/{status}")
+    public ResponseEntity<?> findAllAccountRegCustomer(@PathVariable("status") String  status){
+        return adminService.findAllCustomersByStatus(status);
+    }
+    @PutMapping("/updateCustomer")
+    public ResponseEntity<?> updateCustomerByPanNumber(@RequestBody StatusUpdateDto statusUpdateDto){
+        return adminService.updateCustomerByPanNumber(statusUpdateDto);
     }
 
-    @GetMapping("/findAllAccountRegCustomer/{registrationReqStatus}")
-    public ResponseEntity<?> findAll(@PathVariable("registrationReqStatus") String  registrationReqStatus){
-        //List<CustomerDto> customerDtos = adminService.findAll();
-        return adminService.findAllAccountRegCustomerByRegStatus(registrationReqStatus);
+    @GetMapping("/findAllPasswordChangeRequests/{status}")
+    public ResponseEntity<List<PasswordChangeRequestDto>> findAllPasswordChangeRequests(@PathVariable("status") String  status){
+        return ResponseEntity.ok(adminService.findAllPasswordChangeRequests(status));
     }
 
+    @PutMapping("/updatePasswordChangeRequest")
+    public ResponseEntity<String> updatePasswordChangeRequest(@RequestBody StatusUpdateDto statusUpdateDto){
+        return ResponseEntity.ok(adminService.updatePasswordChangeRequest(statusUpdateDto));
+    }
 }

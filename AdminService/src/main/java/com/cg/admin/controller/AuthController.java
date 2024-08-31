@@ -18,6 +18,8 @@ public class AuthController {
     public String welcome(){
         return  "welcome to AdminService";
     }
+
+
     @Operation(summary = "Login Admin",description = "return admin token")
     @PostMapping("/login")
     public AuthResponse adminLogin(@RequestBody AdminDto adminDto)  {

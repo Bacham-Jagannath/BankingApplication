@@ -6,13 +6,14 @@ app:
     cookieMaxAge: 864000000
     cookiePath: /
     secretKey: user secret key
-  user-service: http://localhost:8081/auth
+  customerServiceUrl: http://localhost:8081
   cibil:
     default:
       cibil-score: 800
 
-
 spring:
+  config:
+    import: hari.yml
   kafka:
     producer:
       bootstrap-servers: localhost:9092
@@ -27,6 +28,7 @@ management:
   endpoint:
     health:
       show-details: always
+
 
 
 

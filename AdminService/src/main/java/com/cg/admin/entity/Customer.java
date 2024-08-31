@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Customer")
-@Table(name = "customer_table", schema = "auth_db")
+@Table(name = "customer", schema = "auth_db")
 public class Customer  {
     @Id
     @Column(name = "pan_number")
@@ -39,18 +39,17 @@ public class Customer  {
 
     @Column(name = "registration_ReqStatus")
     private String registrationReqStatus;
-    @Column(name = "created_by")
-    private String createdBy;
-    @Column(name = "updated_by")
-    private  String updatedBy;
-
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
-
-    @Column(name = "updated_date")
-    private LocalDateTime updatedDate;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Account account;
+
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "updated_by")
+    private  String updatedBy;
+    @Column(name = "created_on", updatable = false)
+    private LocalDateTime createdOn;
+    @Column(name = "updated_on")
+    private LocalDateTime updatedOn;
 }

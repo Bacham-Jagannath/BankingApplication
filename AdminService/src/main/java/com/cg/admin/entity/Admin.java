@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.kafka.common.protocol.types.Field;
 
 import java.time.LocalDateTime;
 
@@ -37,5 +38,9 @@ public class Admin {
     @Column(name = "mobile_number")
     private Long mobileNum;
 
+    private LocalDateTime createdOn;
+    private LocalDateTime updatedOn;
+    private String createdBy;
+    private String updatedBy;
 
 }
