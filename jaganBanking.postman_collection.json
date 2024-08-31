@@ -1,0 +1,455 @@
+{
+	"info": {
+		"_postman_id": "a4f4d968-b0ad-4522-a743-96987a2cf51f",
+		"name": "jaganBanking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4458699"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8082/findAllCustomer/ALL",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJpZCI6MTAyLCJ1c2VybmFtZSI6InN0cmluZyIsInN1YiI6IkpXVCBWYWxpZGF0b3IgVG9rZW4iLCJpYXQiOjE3MjUxMDUyNDUsImV4cCI6MTcyNTE5MTY0NX0.lMQ-gc9yWVW5n-3qCNMi0PKBYdp-UOKLGlHhDH5YHi8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/admin/findAllCustomer/ALL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"admin",
+						"findAllCustomer",
+						"ALL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"string\",\n    \"password\": \"string\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customer Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"panNumber\": \"BAPPN1611E\",\n  \"firstname\": \"user\",\n  \"lastname\": \"user\",\n  \"password\": \"string\",\n  \"email\": \"customer@email.com\",\n  \"mobileNum\": 9908506952,\n  \"role\": \"USER\",\n  \"account\": {\n    \"accountNo\": \"1234567890\",\n    \"accountType\": \"SAVING\",\n    \"currentBalance\": 0,\n    \"accountSource\": \"SBI\"\n  },\n  \"registrationReqStatus\": \"CREATED\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Welcome",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/auth/welcome",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"auth",
+						"welcome"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"panNumber\": \"BAPPN1611J\",\n  \"firstname\": \"customer\",\n  \"lastname\": \"customer\",\n  \"password\": \"customer\",\n  \"email\": \"customer@email.com\",\n  \"mobileNum\": 9908506952,\n  \"role\": \"USER\",\n  \"account\": {\n    \"accountNo\": \"1234567890\",\n    \"accountType\": \"SAVING\",\n    \"currentBalance\": 0,\n    \"accountSource\": \"SBI\"\n  },\n  \"status\": \"CREATED\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customer Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"panNumber\": \"BAPPN1611J\",\n    \"password\": \"customer\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstname\": \"string\",\n  \"lastname\": \"string\",\n  \"username\": \"string\",\n  \"password\": \"string\",\n  \"email\": \"string@email.com\",\n  \"mobileNum\": 8341140401,\n  \"role\": \"ADMIN\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/auth/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"auth",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customer Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJpZCI6MTAyLCJ1c2VybmFtZSI6InN0cmluZyIsInN1YiI6IkpXVCBWYWxpZGF0b3IgVG9rZW4iLCJpYXQiOjE3MjUxMDUyNDUsImV4cCI6MTcyNTE5MTY0NX0.lMQ-gc9yWVW5n-3qCNMi0PKBYdp-UOKLGlHhDH5YHi8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"panNumber\":\"BAPPN1611J\",\n    \"status\":\"APPROVED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/admin/updateCustomer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"admin",
+						"updateCustomer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8082/actuator/health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/actuator/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customer Password Change Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsIm5hbWUiOiJjdXN0b21lciBjdXN0b21lciIsInBhbk51bWJlciI6IkJBUFBOMTYxMUoiLCJpZCI6IkJBUFBOMTYxMUoiLCJ1c2VybmFtZSI6IkJBUFBOMTYxMUoiLCJzdWIiOiJKV1QgVmFsaWRhdG9yIFRva2VuIiwiaWF0IjoxNzI1MTA2MDc3LCJleHAiOjE3MjUxOTI0Nzd9.Ivo2PdJYj2PujkhoKC5PaK4Jl24FaKNZzaMPmT-ms8w",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"customer1\",\n  \"panNumber\": \"BAPPN1611J\",\n  \"status\": \"CREATED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/customer/createPasswordChangeRequest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"customer",
+						"createPasswordChangeRequest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Customer Password Change Request",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJpZCI6MTAyLCJ1c2VybmFtZSI6InN0cmluZyIsInN1YiI6IkpXVCBWYWxpZGF0b3IgVG9rZW4iLCJpYXQiOjE3MjUxMDUyNDUsImV4cCI6MTcyNTE5MTY0NX0.lMQ-gc9yWVW5n-3qCNMi0PKBYdp-UOKLGlHhDH5YHi8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/admin/findAllPasswordChangeRequests/ALL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"admin",
+						"findAllPasswordChangeRequests",
+						"ALL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Password Change Request",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJpZCI6MTAyLCJ1c2VybmFtZSI6InN0cmluZyIsInN1YiI6IkpXVCBWYWxpZGF0b3IgVG9rZW4iLCJpYXQiOjE3MjUxMDUyNDUsImV4cCI6MTcyNTE5MTY0NX0.lMQ-gc9yWVW5n-3qCNMi0PKBYdp-UOKLGlHhDH5YHi8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"panNumber\": \"BAPPN1611J\",\n  \"status\": \"APPROVED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/admin/updatePasswordChangeRequest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"admin",
+						"updatePasswordChangeRequest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/actuator/health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8085/actuator/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/customer/createLoan/BAPPN1611J",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"panNumber\": \"BAPPN1611J\",\n  \"status\": \"CREATED\",\n  \"loanAmount\":43245,\n  \"loanType\":\"PERSONAL\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/customer/createLoan/BAPPN1611J",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"customer",
+						"createLoan",
+						"BAPPN1611J"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Loan",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsIm5hbWUiOiJjdXN0b21lciBjdXN0b21lciIsInBhbk51bWJlciI6IkJBUFBOMTYxMUoiLCJpZCI6IkJBUFBOMTYxMUoiLCJ1c2VybmFtZSI6IkJBUFBOMTYxMUoiLCJzdWIiOiJKV1QgVmFsaWRhdG9yIFRva2VuIiwiaWF0IjoxNzI1MTA2OTY2LCJleHAiOjE3MjUxOTMzNjZ9.Dms8CdZUr8hmsS9t6sFLFzcQrwBM1x7u-PNwiyPc3nY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"panNumber\": \"BAPPN1611J\",\n  \"status\": \"CREATED\",\n  \"loanAmount\":43245,\n  \"loanType\":\"HOME\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/customer/createLoan/BAPPN1611J",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"customer",
+						"createLoan",
+						"BAPPN1611J"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
