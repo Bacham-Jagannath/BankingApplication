@@ -2,12 +2,11 @@ package com.cg.service;
 
 import com.cg.dto.LoanDto;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 public interface LoanService {
 
-    public List<LoanDto> getAllLoans();
+    public ResponseEntity<?> getAllLoans();
 
     public LoanDto createLoan(LoanDto loanDto, HttpServletRequest httpServletRequest);
 

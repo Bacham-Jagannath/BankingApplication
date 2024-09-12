@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 public class LoanDto {
     private Long loanId;
 
-    @NotNull(message = "loan amount should not be null")
     private Double loanAmount;
 
     private String loanType;

@@ -14,12 +14,8 @@ import java.time.LocalDateTime;
 public class AuditLoggingInterceptor implements Interceptor, Serializable {
 
 
-    private static final String createdDate = "createdDate";
-    private static final String updatedDate = "updatedDate";
-
-    private static final String createdBy = "createdBy";
-
-    private static final String updatedBy = "updatedBy";
+    private static final String CREATED_ON = "createdOn";
+    private static final String UPDATED_ON = "updatedOn";
 
     @Autowired
     HttpServletRequest httpServletRequest;
@@ -28,11 +24,11 @@ public class AuditLoggingInterceptor implements Interceptor, Serializable {
     public boolean onSave(Object entity, Object id, Object[] state, String[] propertyNames, Type[] types) throws CallbackException {
         boolean found = false;
         for (int i = 0; i < propertyNames.length; i++) {
-            if(createdDate.equalsIgnoreCase(propertyNames[i]) && state[i]==null){
+            if(CREATED_ON.equalsIgnoreCase(propertyNames[i]) && state[i]==null){
                 state[i] = getDate();
                 found = true;
 
-            }else if(updatedDate.equalsIgnoreCase(propertyNames[i]) && state[i]==null){
+            }else if(UPDATED_ON.equalsIgnoreCase(propertyNames[i]) && state[i]==null){
                 state[i] = getDate();
                 found = true;
 
@@ -45,11 +41,11 @@ public class AuditLoggingInterceptor implements Interceptor, Serializable {
     public boolean onFlushDirty(Object entity, Object id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) throws CallbackException {
         boolean found = false;
         for (int i = 0; i < propertyNames.length; i++) {
-            if(createdDate.equalsIgnoreCase(propertyNames[i])){
+            if(CREATED_ON.equalsIgnoreCase(propertyNames[i])){
                 currentState[i] = getDate();
                 found = true;
 
-            }else if(updatedDate.equalsIgnoreCase(propertyNames[i])){
+            }else if(UPDATED_ON.equalsIgnoreCase(propertyNames[i])){
                 currentState[i] = getDate();
                 found = true;
 

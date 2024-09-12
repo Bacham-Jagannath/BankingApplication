@@ -26,6 +26,10 @@ public class CustomerDto {
         this.lastname = lastname;
         this.username = username;
     }
+    public CustomerDto(String panNumber){
+        this.panNumber=panNumber;
+    }
+
 
 
 }

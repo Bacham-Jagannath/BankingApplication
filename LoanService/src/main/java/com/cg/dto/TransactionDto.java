@@ -17,4 +17,14 @@ public class TransactionDto {
     private LocalDateTime updatedDate;
     private String updatedBy;
 
+    public TransactionDto(Long id, String panNumber, Long accountId, String transactionStatus,String transactionId) {
+        Id = id;
+        this.panNumber = panNumber;
+        this.accountId = accountId;
+        this.transactionStatus = transactionStatus;
+        this.transactionId = transactionId;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.updatedBy = updatedBy;
+    }
 }

@@ -33,6 +33,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -95,15 +96,24 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanDto> getAllLoans() {
-        Claims tokenDetails = getTokenDetails(request);
+    public ResponseEntity<?> getAllLoans() {
+//        Claims tokenDetails = getTokenDetails(request);
+//
+//        if (!tokenDetails.get("role").equals("ADMIN")) {
+//            throw new LoanServiceException("You don't have Permission to view all loan Details", 403);
+//        }
 
-        if (!tokenDetails.get("role").equals("ADMIN")) {
-            throw new LoanServiceException("You don't have Permission to view all loan Details", 403);
-        }
-        List<Loan> loanList = loanRepository.findAll();
-        List<LoanDto> loanDtos = objectMapper.convertValue(loanList, List.class);
-        return loanDtos;
+        //if (status.equalsIgnoreCase("ALL")){
+            List<Loan> loanList = loanRepository.findAll();
+        List<LoanDto> loanDtos =loanList.stream().map(LoanServiceImpl::convertToLoanDto)
+                    .collect(Collectors.toList());
+        //}
+//        else {
+//            List<Loan> loans = loanRepository.getByLoanStatus(status);
+//            loanDtos =loans.stream().map(LoanServiceImpl::convertToLoanDto)
+//                    .collect(Collectors.toList());
+//        }
+        return ResponseEntity.ok(loanDtos);
     }
 
 
@@ -253,5 +263,10 @@ public class LoanServiceImpl implements LoanService {
     {
         CibilScore cibilScore = cibilScoreRepository.findByPanNumber(panNumber);
          return cibilScore.getCibilScore()>=defaultCibilScore;
+    }
+
+    private static LoanDto convertToLoanDto(Loan loan) {
+
+        return new LoanDto(loan);
     }
 }
