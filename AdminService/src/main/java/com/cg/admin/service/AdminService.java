@@ -1,10 +1,6 @@
 package com.cg.admin.service;
 
-import com.cg.admin.dto.AdminDto;
-import com.cg.admin.dto.AuthResponse;
-import com.cg.admin.dto.PasswordChangeRequestDto;
-import com.cg.admin.dto.StatusUpdateDto;
-import org.apache.kafka.common.protocol.types.Field;
+import com.cg.admin.dto.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -22,4 +18,8 @@ public interface AdminService  {
     public String updatePasswordChangeRequest(StatusUpdateDto statusUpdateDto);
 
     public List<PasswordChangeRequestDto> findAllPasswordChangeRequests(String status);
+
+    public ResponseEntity<?> getAllCreatedLoans();
+
+    public LoanDto updateLoanById(Long loanId, LoanDto loanDto);
 }

@@ -12,18 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Admin")
-@Table(name = "admin", schema = "auth_db")
+@Table(name = "admin_tb", schema = "auth_db")
 public class Admin {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "firstname")
-    private String firstname;
-    @Column(name = "lastname")
-    private  String lastname;
-
     @Column(name = "username")
     private String username;
 

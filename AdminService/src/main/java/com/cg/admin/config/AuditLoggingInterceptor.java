@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Component
-public class AuditLoggingInterceptor implements Interceptor, Serializable {
+public class    AuditLoggingInterceptor implements Interceptor, Serializable {
 
     private static final String CREATED_ON = "createdOn";
     private static final String UPDATED_ON = "updatedOn";

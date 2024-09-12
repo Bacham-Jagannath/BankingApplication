@@ -19,6 +19,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.*;
@@ -43,20 +44,20 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private TokenService tokenService;
 
-    //@Autowired
-    // private TokenServiceProvider tokenServiceProvider;
-//
-//    @Autowired
-//    private TokenAuthenticationFilter tokenAuthenticationFilter;
-
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private JwtUtil jwtUtil;
 
     @Value("${app.auth.customerServiceUrl}")
     private String customerServiceUrl;
+
+    @Value("${app.auth.loanServiceUrl}")
+    private String loanServiceUrl;
 
     @Override
     public AuthResponse findByUserNameAndPassword(String username, String password) {
@@ -75,90 +76,7 @@ public class AdminServiceImpl implements AdminService {
         return "Admin Successfully Registered";
     }
 
-    @Override
-    public String updatePasswordChangeRequest(StatusUpdateDto statusUpdateDto) {
 
-        String token = tokenService.getCurrentToken();
-
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "%s/customer/updatePasswordChangeRequest".formatted(customerServiceUrl);
-
-        // Create headers and add Authorization
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer %s".formatted(token));
-
-        // Create the request entity with the body
-        HttpEntity<StatusUpdateDto> requestEntity = new HttpEntity<>(statusUpdateDto, headers);
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
-        ResponseEntity<String> response;
-        try {
-            // Perform the HTTP PUT request
-            response = restTemplate.exchange(
-                    builder.buildAndExpand().toUri(), // Expand path variable
-                    HttpMethod.PUT,
-                    requestEntity,
-                    String.class
-            );
-            // Handle response if needed
-        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException e) {
-            // Rethrow the same exception type
-            throw new AdminServiceException(e.getMessage(), 400);
-        } catch (RestClientException e) {
-            // Rethrow a more general RestClientException if needed
-            throw new AdminServiceException(e.getMessage(), 400);
-        }
-        return response.getBody();
-    }
-
-    @Override
-    public List<PasswordChangeRequestDto> findAllPasswordChangeRequests(String status) {
-
-        if (!tokenService.isAdmin()) {
-            throw new AdminServiceException("Unauthorized", 401);
-        }
-
-        String token = tokenService.getCurrentToken();
-        Map<String, Object> tokenDetails = tokenService.getAdminDetailsByToken();
-
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "%s/customer/getAllPasswordReq/{status}".formatted(customerServiceUrl);
-        ResponseEntity<List<PasswordChangeRequestDto>> response;
-
-        // Create headers and add Authorization
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer %s".formatted(token));
-
-        // Create an HttpEntity with the headers
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
-        try {
-            response = restTemplate.exchange(
-                    builder.buildAndExpand(status).toUri(), // Expand path variable
-                    HttpMethod.GET,
-                    entity,
-                    new ParameterizedTypeReference<List<PasswordChangeRequestDto>>() {
-                    }
-            );
-            // Handle response if needed
-        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException e) {
-            // Rethrow the same exception type
-            throw new AdminServiceException(e.getMessage(), 400);
-        } catch (RestClientException e) {
-            // Rethrow a more general RestClientException if needed
-            throw new AdminServiceException(e.getMessage(), 400);
-        }
-
-        return response.getBody();
-    }
-
-    private String tokenGenerator(Admin admin) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", admin.getId());
-        map.put("username", admin.getUsername());
-        map.put("role", admin.getRole());
-        return jwtUtil.createToken(map, "JWT Validator Token");
-    }
 
     @Override
     public ResponseEntity<?> findAllCustomersByStatus(String status) {
@@ -240,18 +158,166 @@ public class AdminServiceImpl implements AdminService {
         // Return the updated CustomerDto from the response
         return ResponseEntity.ok(postResponse.getBody());
     }
-    // return ResponseEntity.ok("Account Created SuccessFully");
-//        } else {
-//            throw new AdminServiceException("You don't have Permission to update the Details   ", 403);
-//        }
 
+    @Override
+    public String updatePasswordChangeRequest(StatusUpdateDto statusUpdateDto) {
 
-//    private Claims getTokenDetails(HttpServletRequest request) {
-//        String token = tokenAuthenticationFilter.getJwtFromRequest(request);
-//        Claims claims = tokenServiceProvider.extractAllClaims(token);
-//        return claims;
-//    }
+        String token = tokenService.getCurrentToken();
 
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "%s/customer/updatePasswordChangeRequest".formatted(customerServiceUrl);
+
+        // Create headers and add Authorization
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer %s".formatted(token));
+
+        // Create the request entity with the body
+        HttpEntity<StatusUpdateDto> requestEntity = new HttpEntity<>(statusUpdateDto, headers);
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
+        ResponseEntity<String> response;
+        try {
+            // Perform the HTTP PUT request
+            response = restTemplate.exchange(
+                    builder.buildAndExpand().toUri(), // Expand path variable
+                    HttpMethod.PUT,
+                    requestEntity,
+                    String.class
+            );
+            // Handle response if needed
+        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException e) {
+            // Rethrow the same exception type
+            throw new AdminServiceException(e.getMessage(), 400);
+        } catch (RestClientException e) {
+            // Rethrow a more general RestClientException if needed
+            throw new AdminServiceException(e.getMessage(), 400);
+        }
+        return response.getBody();
+    }
+
+    @Override
+    public List<PasswordChangeRequestDto> findAllPasswordChangeRequests(String status) {
+
+        if (!tokenService.isAdmin()) {
+            throw new AdminServiceException("Unauthorized", 401);
+        }
+
+        String token = tokenService.getCurrentToken();
+        Map<String, Object> tokenDetails = tokenService.getAdminDetailsByToken();
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "%s/customer/getAllPasswordReq/{status}".formatted(customerServiceUrl);
+        ResponseEntity<List<PasswordChangeRequestDto>> response;
+
+        // Create headers and add Authorization
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer %s".formatted(token));
+
+        // Create an HttpEntity with the headers
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
+        try {
+            response = restTemplate.exchange(
+                    builder.buildAndExpand(status).toUri(), // Expand path variable
+                    HttpMethod.GET,
+                    entity,
+                    new ParameterizedTypeReference<List<PasswordChangeRequestDto>>() {
+                    }
+            );
+            // Handle response if needed
+        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException e) {
+            // Rethrow the same exception type
+            throw new AdminServiceException(e.getMessage(), 400);
+        } catch (RestClientException e) {
+            // Rethrow a more general RestClientException if needed
+            throw new AdminServiceException(e.getMessage(), 400);
+        }
+
+        return response.getBody();
+    }
+
+    @Override
+    public ResponseEntity<?> getAllCreatedLoans() {
+
+        if (!tokenService.isAdmin()) {
+            throw new AdminServiceException("Unauthorized", 401);
+        }
+
+        String token = tokenService.getCurrentToken();
+        Map<String, Object> tokenDetails = tokenService.getAdminDetailsByToken();
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "%s/loans".formatted(loanServiceUrl);
+        ResponseEntity<List<LoanDto>> response;
+
+        // Create headers and add Authorization
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer %s".formatted(token));
+
+        // Create an HttpEntity with the headers
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
+        try {
+            response = restTemplate.exchange(
+                    builder.buildAndExpand().toUri(), // Expand path variable
+                    HttpMethod.GET,
+                    entity,
+                    new ParameterizedTypeReference<List<LoanDto>>() {
+                    }
+            );
+            // Handle response if needed
+        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException e) {
+            // Rethrow the same exception type
+            throw new AdminServiceException(e.getMessage(), 400);
+        } catch (RestClientException e) {
+            // Rethrow a more general RestClientException if needed
+            throw new AdminServiceException(e.getMessage(), 400);
+        }
+        return ResponseEntity.ok(response.getBody());
+    }
+
+    @Override
+    public LoanDto updateLoanById(Long loanId, LoanDto loanDto) {
+        String token = tokenService.getCurrentToken();
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "%s/loans/{loanId}".formatted(loanServiceUrl);
+
+        // Create headers and add Authorization
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer %s".formatted(token));
+
+        // Create the request entity with the body
+        HttpEntity<LoanDto> requestEntity = new HttpEntity<>(loanDto, headers);
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
+        ResponseEntity<LoanDto> response;
+        try {
+            // Perform the HTTP PUT request
+            response = restTemplate.exchange(
+                    builder.buildAndExpand(loanId).toUri(), // Expand path variable
+                    HttpMethod.PUT,
+                    requestEntity,
+                    LoanDto.class
+            );
+            // Handle response if needed
+        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException e) {
+            // Rethrow the same exception type
+            throw new AdminServiceException(e.getMessage(), 400);
+        } catch (RestClientException e) {
+            // Rethrow a more general RestClientException if needed
+            throw new AdminServiceException(e.getMessage(), 400);
+        }
+        return response.getBody();
+    }
+
+    private String tokenGenerator(Admin admin) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", admin.getId());
+        map.put("username", admin.getUsername());
+        map.put("role", admin.getRole());
+        return jwtUtil.createToken(map, "JWT Validator Token");
+    }
     private void validateIsAdminExist(AdminDto adminDto) {
         Optional<Admin> byUsername = adminRepository.findByUsername(adminDto.getUsername());
         if (byUsername.isPresent()) {
@@ -297,9 +363,4 @@ public class AdminServiceImpl implements AdminService {
             throw new AdminServiceException("Customer not found");
         }
     }
-
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return null;
-//    }
 }
