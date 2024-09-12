@@ -453,3 +453,22 @@
 		}
 	]
 }
+
+Get All Loans
+curl --location 'http://localhost:8082/admin/getAllCreatedLoans' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJpZCI6MSwidXNlcm5hbWUiOiJOYXJhaGFyaSIsInN1YiI6IkpXVCBWYWxpZGF0b3IgVG9rZW4iLCJpYXQiOjE3MjYxMTgyMjksImV4cCI6MTcyNjIwNDYyOX0.kaBgXeVSpgvizMZX6fRHBY88fnvJIhEel1l6gEmZDBs' \
+--header 'Cookie: JSESSIONID=A5E9F403E88EFFAA95CD77DC37BC099B'
+
+update Loan
+curl --location --request PUT 'http://localhost:8082/admin/updateLoanById/9' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJpZCI6MSwidXNlcm5hbWUiOiJOYXJhaGFyaSIsInN1YiI6IkpXVCBWYWxpZGF0b3IgVG9rZW4iLCJpYXQiOjE3MjYxMTgyMjksImV4cCI6MTcyNjIwNDYyOX0.kaBgXeVSpgvizMZX6fRHBY88fnvJIhEel1l6gEmZDBs' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: JSESSIONID=A5E9F403E88EFFAA95CD77DC37BC099B' \
+--data '{
+    "loanId": 9,
+    "loanAmount": 43245.0,
+    "loanType": "HOME",
+    "status": "IN_PROGRESS",
+    "panNumber": "BAPPN1611J"
+}'
+
